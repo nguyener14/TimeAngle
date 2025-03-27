@@ -38,7 +38,7 @@ namespace TimeAngle.Controllers
             }
             catch(Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { message = "Unexpected server error." });
             }
         }
     }
