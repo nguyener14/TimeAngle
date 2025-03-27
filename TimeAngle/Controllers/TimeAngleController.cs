@@ -1,0 +1,32 @@
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using TimeAngle.Services;
+
+namespace TimeAngle.Controllers
+{
+    public class TimeAngleController : ControllerBase
+    {
+        private readonly ILogger<TimeAngleController> _logger;
+        private readonly TimeAngleService _timeAngleService;
+
+        public TimeAngleController(TimeAngleService timeAngleService, ILogger<TimeAngleController> logger)
+        {
+            _timeAngleService = timeAngleService;
+            _logger = logger;
+        }
+
+        [HttpGet("calculate-angle")]
+        public async Task<IActionResult> CalculcateTimeAngle([FromQuery] int hour, [FromQuery] int minute)
+        {
+            var angle = await _timeAngleService.CalculateTimeAngle(hour, minute);
+            return Ok(angle);
+        }
+
+        [HttpPost("calculate-angle")]
+        public async Task<IActionResult> CalculcateTimeAngle([FromBody] string time)
+        {
+            var angle = await _timeAngleService.CalculateTimeAngle(time);
+            return Ok(angle);
+        }
+    }
+}
