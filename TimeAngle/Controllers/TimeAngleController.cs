@@ -4,6 +4,8 @@ using TimeAngle.Services;
 
 namespace TimeAngle.Controllers
 {
+    [ApiController]
+    [Route("api/timeangle")]
     public class TimeAngleController : ControllerBase
     {
         private readonly ILogger<TimeAngleController> _logger;
