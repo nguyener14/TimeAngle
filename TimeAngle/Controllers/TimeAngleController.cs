@@ -25,8 +25,19 @@ namespace TimeAngle.Controllers
         [HttpPost("calculate-angle")]
         public async Task<IActionResult> CalculcateTimeAngle([FromBody] string time)
         {
-            var angle = await _timeAngleService.CalculateTimeAngle(time);
-            return Ok(angle);
+            try
+            {
+                var angle = await _timeAngleService.CalculateTimeAngle(time);
+                return Ok(angle);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

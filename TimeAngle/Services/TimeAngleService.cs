@@ -35,10 +35,11 @@ namespace TimeAngle.Services
 
         private double TimeCalcluation(int hour, int minute)
         {
-            hour %= 12;
             //360 degrees / 12 hours = 30
             //360 degrees/ 60 minutes = 6 
             //30 degrees/ 60 minutes = 0.5
+
+            hour %= 12;
             var hourAngle = (hour * 30) + (minute * 0.5);
             var minuteAngle = minute * 6;
             var total = hourAngle + minuteAngle;
