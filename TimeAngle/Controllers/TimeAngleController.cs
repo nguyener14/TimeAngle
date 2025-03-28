@@ -20,8 +20,20 @@ namespace TimeAngle.Controllers
         [HttpGet("calculate-angle")]
         public async Task<IActionResult> CalculcateTimeAngle([FromQuery] int hour, [FromQuery] int minute)
         {
-            var angle = await _timeAngleService.CalculateTimeAngle(hour, minute);
-            return Ok(angle);
+            try
+            {
+                var angle = await _timeAngleService.CalculateTimeAngle(hour, minute);
+                return Ok(angle);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Unexpected server error." });
+            }
+
         }
 
         [HttpPost("calculate-angle")]
