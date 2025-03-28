@@ -12,6 +12,12 @@ namespace TimeAngle.Services
 
         public async Task<double> CalculateTimeAngle(int hour, int minute)
         {
+            if (hour < 0 || hour > 23)
+                throw new ArgumentOutOfRangeException(nameof(hour), "Hour must be between 0 and 23");
+
+            if (minute < 0 || minute > 59)
+                throw new ArgumentOutOfRangeException(nameof(minute), "Minute must be between 0 and 59");
+
             return TimeCalcluation(hour, minute);
         }
 
@@ -29,7 +35,7 @@ namespace TimeAngle.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Failed to calculate time from input {time}", time);
-                return -1;
+                throw;
             }
         }
 
@@ -42,9 +48,8 @@ namespace TimeAngle.Services
             hour %= 12;
             var hourAngle = (hour * 30) + (minute * 0.5);
             var minuteAngle = minute * 6;
-            var total = hourAngle + minuteAngle;
 
-            return Math.Min(total, 360 - total);
+            return hourAngle + minuteAngle;
         }
     }
 }
